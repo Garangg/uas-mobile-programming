@@ -100,138 +100,145 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 30,
             ),
             Expanded(
-              child: Column(
+              child: ListView(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0.10,
-                          blurRadius: 20,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        hintText: "Nama",
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0.10,
+                              blurRadius: 20,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            hintText: "Nama",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0.10,
-                          blurRadius: 20,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0.10,
+                              blurRadius: 20,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: TextFormField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            hintText: "Email",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0.10,
-                          blurRadius: 20,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0.10,
+                              blurRadius: 20,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 0.10,
-                          blurRadius: 20,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: TextFormField(
-                      controller: _confirmPasswordController,
-                      decoration: InputDecoration(
-                        hintText: "Confirm Password",
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 0.10,
+                              blurRadius: 20,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: TextFormField(
+                          controller: _confirmPasswordController,
+                          decoration: InputDecoration(
+                            hintText: "Confirm Password",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _register();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange[200],
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 50,
-                        vertical: 10,
+                      const SizedBox(
+                        height: 30,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      Container(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _register();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange[200],
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 50,
+                              vertical: 10,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            "Register",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      "Register",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    ],
                   ),
                 ],
               ),
