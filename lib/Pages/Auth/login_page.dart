@@ -3,6 +3,7 @@ import 'package:flutter_laravel/Pages/Auth/register_page.dart';
 import 'package:flutter_laravel/Pages/home_page.dart';
 import 'package:flutter_laravel/ViewModels/AuthVM.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   // Controllers for text fields
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _rememberMe = false;
+  bool _obscureText = true;
 
   @override
   void dispose() {
@@ -34,6 +37,13 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return; // Ensure the widget is still mounted
 
       if (response.success) {
+        if (_rememberMe) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setBool('rememberMe', true);
+          await prefs.setString('email', email);
+          await prefs.setString('password', password);
+        }
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
@@ -113,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Column(
                 children: [
                   Container(
@@ -130,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                       decoration: InputDecoration(
                         hintText: "Email",
@@ -162,14 +173,42 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(10),
                         ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        ),
                       ),
+                      obscureText: _obscureText,
                     ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _rememberMe,
+                        onChanged: (value) {
+                          setState(() {
+                            _rememberMe = value!;
+                          });
+                        },
+                      ),
+                      Text(
+                        "Remember Me",
+                        style: GoogleFonts.poppins(),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 30),
                   ElevatedButton(
-                    onPressed: () {
-                      _login();
-                    },
+                    onPressed: _login,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Colors.orange[200],

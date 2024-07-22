@@ -4,6 +4,7 @@ import 'package:flutter_laravel/Models/toilet_model.dart';
 import 'package:flutter_laravel/Pages/Toilet/addtoilet_page.dart';
 import 'package:flutter_laravel/Pages/Toilet/toiletdetail_page.dart';
 import 'package:flutter_laravel/ViewModels/toilet_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ToiletPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ToiletPageState extends State<ToiletPage> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    "Daftar Toilet",
+                    "Daftar Kamar Mandi",
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -88,7 +89,10 @@ class _ToiletPageState extends State<ToiletPage> {
                             child: ListTile(
                               title: Text(
                                 toilets[index].name,
-                                style: GoogleFonts.poppins(),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               trailing: GestureDetector(
                                   onTap: () {
@@ -96,6 +100,7 @@ class _ToiletPageState extends State<ToiletPage> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                          backgroundColor: Colors.red[100],
                                           title: const Text('Konfirmasi'),
                                           content: const Text(
                                               'Apakah Anda yakin ingin menghapus data toilet ini?'),
@@ -104,16 +109,33 @@ class _ToiletPageState extends State<ToiletPage> {
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: const Text('Batal'),
+                                              child: const Text('Batal',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                toiletVM.deleteToilet(
-                                                    toilets[index].id);
-                                                Navigator.of(context).pop();
-                                                setState(() {});
+                                                toiletVM
+                                                    .deleteToilet(
+                                                        toilets[index].id)
+                                                    .then((value) {
+                                                  showToast(
+                                                      'Data Toilet berhasil dihapus',
+                                                      context: context,
+                                                      backgroundColor:
+                                                          Colors.red[400],
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color: Colors
+                                                                  .white));
+                                                  Navigator.of(context).pop();
+                                                  setState(() {});
+                                                });
                                               },
-                                              child: const Text('Hapus'),
+                                              child: const Text('Hapus',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 202, 55, 45))),
                                             ),
                                           ],
                                         );
@@ -137,10 +159,8 @@ class _ToiletPageState extends State<ToiletPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange[200],
         onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AddToiletPage()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const AddToiletPage()));
         },
         child: const Icon(Icons.add),
       ),

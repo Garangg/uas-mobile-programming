@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_laravel/Models/toilet_model.dart';
 import 'package:flutter_laravel/Pages/Toilet/toilet_page.dart';
 import 'package:flutter_laravel/ViewModels/toilet_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditToiletPage extends StatefulWidget {
@@ -26,10 +27,14 @@ class _EditToiletPageState extends State<EditToiletPage> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.toilet.name);
-    _lengthController = TextEditingController(text: widget.toilet.length.toString());
-    _widthController = TextEditingController(text: widget.toilet.width.toString());
-    _descriptionController = TextEditingController(text: widget.toilet.description);
-    _floorLocationController = TextEditingController(text: widget.toilet.floorLocation);
+    _lengthController =
+        TextEditingController(text: widget.toilet.length.toString());
+    _widthController =
+        TextEditingController(text: widget.toilet.width.toString());
+    _descriptionController =
+        TextEditingController(text: widget.toilet.description);
+    _floorLocationController =
+        TextEditingController(text: widget.toilet.floorLocation);
   }
 
   @override
@@ -56,12 +61,17 @@ class _EditToiletPageState extends State<EditToiletPage> {
       );
 
       try {
-        await toiletVM.updateToilet(updatedToilet);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const ToiletPage(),
-          ),
-        );
+        await toiletVM.updateToilet(updatedToilet).then((value) {
+          showToast('Data toilet berhasil diubah',
+              context: context,
+              backgroundColor: Colors.blue[300],
+              textStyle: GoogleFonts.poppins(color: Colors.white));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const ToiletPage(),
+            ),
+          );
+        });
       } catch (error) {
         print("Error updating toilet: $error");
       }
@@ -124,7 +134,8 @@ class _EditToiletPageState extends State<EditToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -155,7 +166,8 @@ class _EditToiletPageState extends State<EditToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -188,7 +200,8 @@ class _EditToiletPageState extends State<EditToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -221,7 +234,8 @@ class _EditToiletPageState extends State<EditToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -252,7 +266,8 @@ class _EditToiletPageState extends State<EditToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -288,8 +303,8 @@ class _EditToiletPageState extends State<EditToiletPage> {
                 ),
                 onPressed: _submitForm,
                 child: const Text(
-                  'Simpan Perubahan',
-                  style: TextStyle(color: Colors.black),
+                  'Update Toilet',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),

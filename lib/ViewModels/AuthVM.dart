@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthVM {
-  final String baseUrl =
-      "http://10.0.2.2:8000/api"; // Replace with your Laravel API URL
+  final String baseUrl = "http://pendataan-prasarana.c1.is/api";
 
   Future<LoginResponse> login(String email, String password) async {
     final response = await http.post(
@@ -14,7 +13,6 @@ class AuthVM {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       final loginResponse = LoginResponse.fromJson(jsonDecode(response.body));
@@ -47,7 +45,6 @@ class AuthVM {
       }),
     );
 
-    print(response.body);
     if (response.statusCode == 200) {
       final registerResponse =
           RegisterResponse.fromJson(jsonDecode(response.body));
@@ -70,9 +67,6 @@ class AuthVM {
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    await prefs.remove('userId');
-    await prefs.remove('userName');
-    await prefs.remove('userEmail');
+    await prefs.clear(); // Clear all user data on logout
   }
 }

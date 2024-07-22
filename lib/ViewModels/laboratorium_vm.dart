@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class LaboratoriumVM {
-  static String baseUrl = 'http://10.0.2.2:8000/api/laboratoriums';
+  static String baseUrl = 'http://pendataan-prasarana.c1.is/api/laboratoriums';
 
   static Future<List<LaboratoriumModel>> getLaboratoriums() async {
     var url = Uri.parse(baseUrl);

@@ -5,6 +5,7 @@ import 'package:flutter_laravel/Pages/Laboratorium/addlaboratorium_page.dart';
 import 'package:flutter_laravel/Pages/Laboratorium/laboratoriumdetail_page.dart';
 import 'package:flutter_laravel/ViewModels/laboratorium_vm.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class LaboratoriumPage extends StatefulWidget {
   const LaboratoriumPage({super.key});
@@ -88,13 +89,18 @@ class _LaboratoriumPageState extends State<LaboratoriumPage> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: ListTile(
-                                title: Text(laboratoriums[index].name),
+                                title: Text(laboratoriums[index].name,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),),
                                 trailing: GestureDetector(
                                   onTap: () {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                          backgroundColor: Colors.red[100],
                                           title: const Text('Konfirmasi'),
                                           content: const Text(
                                               'Apakah Anda yakin ingin menghapus data laboratorium ini?'),
@@ -103,7 +109,9 @@ class _LaboratoriumPageState extends State<LaboratoriumPage> {
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: const Text('Batal'),
+                                              child: const Text('Batal',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
                                             ),
                                             TextButton(
                                               onPressed: () {
@@ -112,11 +120,21 @@ class _LaboratoriumPageState extends State<LaboratoriumPage> {
                                                             laboratoriums[index]
                                                                 .id)
                                                     .then((value) {
+                                                  showToast(
+                                                      'Data Laboratorium berhasil dihapus',
+                                                      context: context,
+                                                      backgroundColor:
+                                                          Colors.red[400],
+                                                      textStyle: const TextStyle(
+                                                          color: Colors.white));
                                                   Navigator.of(context).pop();
                                                   setState(() {});
                                                 });
                                               },
-                                              child: const Text('Hapus'),
+                                              child: const Text('Hapus',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 202, 55, 45))),
                                             ),
                                           ],
                                         );

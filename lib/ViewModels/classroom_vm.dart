@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class classroomVM {
-  static String baseUrl = 'http://10.0.2.2:8000/api/classrooms';
+  static String baseUrl = 'http://pendataan-prasarana.c1.is/api/classrooms';
 
   static Future<List<ClassroomModel>> getClassrooms() async {
     var url = Uri.parse(baseUrl);
@@ -84,7 +84,7 @@ class classroomVM {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    if (response.statusCode != 204) {
+    if (response.statusCode != 200) {
       throw Exception('Failed to delete classroom');
     }
   }

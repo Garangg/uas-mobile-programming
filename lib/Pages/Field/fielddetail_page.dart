@@ -74,10 +74,15 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
                         ),
                       ),
                       GestureDetector(
-                          onTap: (){
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => EditFieldPage(field: field)));
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EditFieldPage(field: field)));
                           },
-                        child: Icon(Icons.edit_rounded, color: Colors.black, size: 24))
+                          child: Icon(Icons.edit_rounded,
+                              color: Colors.black, size: 24))
                     ],
                   ),
                   const SizedBox(height: 32),
@@ -99,8 +104,7 @@ class _FieldDetailPageState extends State<FieldDetailPage> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                            "Length: ${field.length} m, Width: ${field.width} m"),
+                        Text("${field.length} x ${field.width} m2"),
                       ],
                     ),
                   ),

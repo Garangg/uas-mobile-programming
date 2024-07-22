@@ -5,6 +5,7 @@ import 'package:flutter_laravel/Pages/Classroom/addclassroom_page.dart';
 import 'package:flutter_laravel/Pages/Classroom/classroomdetail_page.dart';
 import 'package:flutter_laravel/ViewModels/classroom_vm.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class ClassroomPage extends StatefulWidget {
   const ClassroomPage({super.key});
@@ -90,7 +91,10 @@ class _ClassroomPageState extends State<ClassroomPage> {
                             child: ListTile(
                               title: Text(
                                 classrooms[index].name,
-                                style: GoogleFonts.poppins(),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               trailing: GestureDetector(
                                   onTap: () {
@@ -98,6 +102,7 @@ class _ClassroomPageState extends State<ClassroomPage> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                          backgroundColor: Colors.red[100],
                                           title: const Text('Konfirmasi'),
                                           content: const Text(
                                               'Apakah Anda yakin ingin menghapus data ruangan ini?'),
@@ -106,16 +111,33 @@ class _ClassroomPageState extends State<ClassroomPage> {
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: const Text('Batal'),
+                                              child: const Text('Batal',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
                                             ),
                                             TextButton(
                                               onPressed: () {
-                                                classroomVM.deleteClassroom(
-                                                    classrooms[index].id);
-                                                Navigator.of(context).pop();
-                                                setState(() {});
+                                                classroomVM
+                                                    .deleteClassroom(
+                                                        classrooms[index].id)
+                                                    .then((value) {
+                                                  showToast(
+                                                      'Data ruangan berhasil dihapus',
+                                                      context: context,
+                                                      backgroundColor:
+                                                          Colors.red[400],
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color: Colors
+                                                                  .white));
+                                                  Navigator.of(context).pop();
+                                                  setState(() {});
+                                                });
                                               },
-                                              child: const Text('Hapus'),
+                                              child: const Text('Hapus',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 202, 55, 45))),
                                             ),
                                           ],
                                         );

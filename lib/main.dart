@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_laravel/Pages/Auth/login_page.dart';
+import 'package:flutter_laravel/Pages/home_page.dart';
+import 'package:flutter_laravel/ViewModels/AuthVM.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,33 +11,49 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme:
             ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 238, 238, 238)),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const CheckLogin(),
+    );
+  }
+}
+
+class CheckLogin extends StatelessWidget {
+  const CheckLogin({super.key});
+
+  Future<bool> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final rememberMe = prefs.getBool('rememberMe') ?? false;
+    if (rememberMe) {
+      final email = prefs.getString('email') ?? '';
+      final password = prefs.getString('password') ?? '';
+      final response = await AuthVM().login(email, password);
+      return response.success;
+    }
+    return false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _checkLoginStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasData && snapshot.data == true) {
+          return const HomePage();
+        } else {
+          return const LoginPage();
+        }
+      },
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_laravel/Models/laboratorium_model.dart';
 import 'package:flutter_laravel/Pages/Laboratorium/laboratorium_page.dart';
 import 'package:flutter_laravel/ViewModels/laboratorium_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditLaboratoriumPage extends StatefulWidget {
@@ -67,12 +68,18 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
       );
 
       try {
-        await LaboratoriumVM.updateLaboratorium(updatedLaboratorium);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const LaboratoriumPage(),
-          ),
-        );
+        await LaboratoriumVM.updateLaboratorium(updatedLaboratorium)
+            .then((value) {
+          showToast('Data laboratorium berhasil diubah',
+              context: context,
+              backgroundColor: Colors.blue[300],
+              textStyle: GoogleFonts.poppins(color: Colors.white));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const LaboratoriumPage(),
+            ),
+          );
+        });
       } catch (error) {
         // Handle or log error
         print("Error updating laboratorium: $error");
@@ -143,7 +150,7 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
                       child: TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nama',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -172,9 +179,10 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _lengthController,
                         decoration: InputDecoration(
-                          labelText: 'Length',
+                          labelText: 'Panjang',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -205,9 +213,10 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _widthController,
                         decoration: InputDecoration(
-                          labelText: 'Width',
+                          labelText: 'Lebar',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -240,7 +249,7 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
                       child: TextFormField(
                         controller: _descriptionController,
                         decoration: InputDecoration(
-                          labelText: 'Description',
+                          labelText: 'Deskripsi',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -269,9 +278,10 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _capacityController,
                         decoration: InputDecoration(
-                          labelText: 'Capacity',
+                          labelText: 'Kapasitas',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -304,7 +314,7 @@ class _EditLaboratoriumPageState extends State<EditLaboratoriumPage> {
                       child: TextFormField(
                         controller: _floorLocationController,
                         decoration: InputDecoration(
-                          labelText: 'Floor Location',
+                          labelText: 'Lokasi Lantai',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),

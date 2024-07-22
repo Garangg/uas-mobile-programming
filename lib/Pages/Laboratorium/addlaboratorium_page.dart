@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_laravel/Models/laboratorium_model.dart';
 import 'package:flutter_laravel/Pages/Laboratorium/laboratorium_page.dart';
 import 'package:flutter_laravel/ViewModels/laboratorium_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddLaboratoriumPage extends StatefulWidget {
@@ -49,12 +50,17 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
       );
 
       try {
-        await LaboratoriumVM.createLaboratorium(laboratorium);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const LaboratoriumPage(),
-          ),
-        );
+        await LaboratoriumVM.createLaboratorium(laboratorium).then((value) {
+          showToast('Data laboratorium berhasil ditambahkan',
+              context: context,
+              backgroundColor: Colors.green[300],
+              textStyle: GoogleFonts.poppins(color: Colors.white));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const LaboratoriumPage(),
+            ),
+          );
+        });
       } catch (error) {
         // Handle or log error
         print("Error creating laboratorium: $error");
@@ -92,7 +98,7 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Add Laboratorium',
+              'Tambah Laboratorium',
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -121,7 +127,7 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                       child: TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nama',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -150,9 +156,10 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _lengthController,
                         decoration: InputDecoration(
-                          labelText: 'Length',
+                          labelText: 'Panjang',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -183,9 +190,10 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _widthController,
                         decoration: InputDecoration(
-                          labelText: 'Width',
+                          labelText: 'Lebar',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -218,7 +226,7 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                       child: TextFormField(
                         controller: _descriptionController,
                         decoration: InputDecoration(
-                          labelText: 'Description',
+                          labelText: 'Deskripsi',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -247,9 +255,10 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _capacityController,
                         decoration: InputDecoration(
-                          labelText: 'Capacity',
+                          labelText: 'Kapasitas',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -280,7 +289,7 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                       child: TextFormField(
                         controller: _floorLocationController,
                         decoration: InputDecoration(
-                          labelText: 'Floor Location',
+                          labelText: 'Lokasi Lantai',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -309,8 +318,8 @@ class _AddLaboratoriumPageState extends State<AddLaboratoriumPage> {
                 ),
                 onPressed: _submitForm,
                 child: const Text(
-                  'Add Laboratorium',
-                  style: TextStyle(color: Colors.black),
+                  'Tambah Laboratorium',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),

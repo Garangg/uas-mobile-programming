@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_laravel/Models/classroom_model.dart';
 import 'package:flutter_laravel/Pages/Classroom/classroom_page.dart';
 import 'package:flutter_laravel/ViewModels/classroom_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddClassroomPage extends StatefulWidget {
@@ -53,12 +54,17 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
       );
 
       try {
-        await classroomVM.createClassroom(classroom);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const ClassroomPage(),
-          ),
-        );
+        await classroomVM.createClassroom(classroom).then((value) {
+          showToast('Data ruang kelas berhasil ditambahkan',
+              context: context,
+              backgroundColor: Colors.green[300],
+              textStyle: GoogleFonts.poppins(color: Colors.white));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const ClassroomPage(),
+            ),
+          );
+        });
       } catch (error) {
         // Handle or log error
         print("Error creating classroom: $error");
@@ -83,7 +89,10 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
             child: IconButton(
               icon: const Icon(Icons.arrow_back, size: 20, color: Colors.black),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ClassroomPage()));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ClassroomPage()));
               },
             ),
           ),
@@ -95,7 +104,7 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Add Classroom',
+              'Tambah Ruang Kelas',
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -124,7 +133,7 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                       child: TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nama',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -153,9 +162,10 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _lengthController,
                         decoration: InputDecoration(
-                          labelText: 'Length',
+                          labelText: 'Panjang',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -186,9 +196,10 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _widthController,
                         decoration: InputDecoration(
-                          labelText: 'Width',
+                          labelText: 'Lebar',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -221,7 +232,7 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                       child: TextFormField(
                         controller: _descriptionController,
                         decoration: InputDecoration(
-                          labelText: 'Description',
+                          labelText: 'Deskripsi',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -250,9 +261,10 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _capacityController,
                         decoration: InputDecoration(
-                          labelText: 'Capacity',
+                          labelText: 'Kapasitas',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -283,7 +295,7 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                       child: TextFormField(
                         controller: _floorLocationController,
                         decoration: InputDecoration(
-                          labelText: 'Floor Location',
+                          labelText: 'Lokasi Lantai',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -314,7 +326,7 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                       child: TextFormField(
                         controller: _userRoomController,
                         decoration: InputDecoration(
-                          labelText: 'User Room',
+                          labelText: 'Pengguna Ruangan',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -342,8 +354,8 @@ class _AddClassroomPageState extends State<AddClassroomPage> {
                   )),
                   onPressed: _submitForm,
                   child: const Text(
-                    'Add Classroom',
-                    style: TextStyle(color: Colors.black),
+                    'Tambah Ruang Kelas',
+                    style: TextStyle(color: Colors.white),
                   )),
             ),
           ],

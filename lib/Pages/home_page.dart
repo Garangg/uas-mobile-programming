@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_laravel/Pages/Auth/login_page.dart';
 import 'package:flutter_laravel/Pages/Field/field_page.dart';
 import 'package:flutter_laravel/Pages/Laboratorium/laboratorium_page.dart';
 import 'package:flutter_laravel/Pages/Toilet/toilet_page.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_laravel/Pages/Classroom/classroom_page.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +15,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _userName = "Admin";
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    print('Token: $token');
+    if (token == null) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
+    } else {
+      _loadUserName();
+    }
+  }
+
+  Future<void> _loadUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ?? "Admin";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +52,17 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('$_userName',
+                      style: GoogleFonts.poppins(
+                          fontSize: 18, fontWeight: FontWeight.w700)),
+                ),
+              )),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Container(
               width: double.infinity,
               child: Align(
@@ -34,7 +71,9 @@ class _HomePageState extends State<HomePage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red[400],
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.clear(); // Clear all user data on logout
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -65,7 +104,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10.0),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text('Hello, User!',
+                child: Text('Hallo, $_userName',
                     style: GoogleFonts.poppins(
                         fontSize: 24, fontWeight: FontWeight.w700)),
               ),
@@ -85,7 +124,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Container(
                     height: 150,
-                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/images/classroom1.jpeg'),
@@ -95,12 +133,23 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Ruang Kelas',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 107, 107, 107)
+                              .withOpacity(0.2),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12)),
+                        ),
+                        child: Text(
+                          'Ruang Kelas',
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
@@ -118,7 +167,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Container(
                     height: 150,
-                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/images/lab1.jpeg'),
@@ -128,12 +176,23 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Laboratorium',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 107, 107, 107)
+                              .withOpacity(0.2),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12)),
+                        ),
+                        child: Text(
+                          'Laboratorium',
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
@@ -151,7 +210,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Container(
                     height: 150,
-                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/images/field1.jpeg'),
@@ -161,12 +219,23 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Lapangan',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 107, 107, 107)
+                              .withOpacity(0.2),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12)),
+                        ),
+                        child: Text(
+                          'Lapangan',
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
@@ -184,7 +253,6 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Container(
                     height: 150,
-                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       image: const DecorationImage(
                         image: AssetImage('assets/images/toilet1.jpeg'),
@@ -194,39 +262,29 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: Text(
-                        'Toilet',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 107, 107, 107)
+                              .withOpacity(0.2),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12)),
+                        ),
+                        child: Text(
+                          'Kamar mandi',
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(10.0),
-              //   child: Container(
-              //     height: 150,
-              //     padding: const EdgeInsets.all(12),
-              //     decoration: BoxDecoration(
-              //
-              //       borderRadius: BorderRadius.circular(12),
-              //     ),
-              //     child: Align(
-              //       alignment: Alignment.bottomLeft,
-              //       child: Text(
-              //         'Kamar Mandi',
-              //         style: GoogleFonts.poppins(
-              //           fontSize: 18,
-              //           fontWeight: FontWeight.w600,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ]),
           ),
         ],

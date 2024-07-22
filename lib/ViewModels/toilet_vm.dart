@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_laravel/Models/toilet_model.dart';
 
 class toiletVM{
-    static String baseUrl = 'http://10.0.2.2:8000/api/toilets';
+    static String baseUrl = 'http://pendataan-prasarana.c1.is/api/toilets';
 
     static Future<List<ToiletModel>> getToilets() async {
         var url = Uri.parse(baseUrl);

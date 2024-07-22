@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_laravel/Models/field_model.dart';
 import 'package:flutter_laravel/Pages/Field/field_page.dart';
 import 'package:flutter_laravel/ViewModels/field_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddFieldPage extends StatefulWidget {
@@ -42,12 +43,17 @@ class _AddFieldPageState extends State<AddFieldPage> {
       );
 
       try {
-        await FieldVM.createField(field);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const FieldPage(),
-          ),
-        );
+        await FieldVM.createField(field).then((value) {
+          showToast('Data lapangan berhasil ditambahkan',
+              context: context,
+              backgroundColor: Colors.green[300],
+              textStyle: GoogleFonts.poppins(color: Colors.white));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const FieldPage(),
+            ),
+          );
+        });
       } catch (error) {
         // Handle or log error
         print("Error creating field: $error");
@@ -70,7 +76,8 @@ class _AddFieldPageState extends State<AddFieldPage> {
             child: IconButton(
               icon: const Icon(Icons.arrow_back, size: 20, color: Colors.black),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const FieldPage()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const FieldPage()));
               },
             ),
           ),
@@ -111,7 +118,7 @@ class _AddFieldPageState extends State<AddFieldPage> {
                       child: TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          labelText: 'Name',
+                          labelText: 'Nama',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -140,9 +147,10 @@ class _AddFieldPageState extends State<AddFieldPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _lengthController,
                         decoration: InputDecoration(
-                          labelText: 'Length',
+                          labelText: 'Panjang',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -173,9 +181,10 @@ class _AddFieldPageState extends State<AddFieldPage> {
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _widthController,
                         decoration: InputDecoration(
-                          labelText: 'Width',
+                          labelText: 'Lebar',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -208,7 +217,7 @@ class _AddFieldPageState extends State<AddFieldPage> {
                       child: TextFormField(
                         controller: _descriptionController,
                         decoration: InputDecoration(
-                          labelText: 'Description',
+                          labelText: 'Deskripsi',
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(10),
@@ -237,8 +246,8 @@ class _AddFieldPageState extends State<AddFieldPage> {
                 ),
                 onPressed: _submitForm,
                 child: const Text(
-                  'Add Field',
-                  style: TextStyle(color: Colors.black),
+                  'Tambah Lapangan',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),

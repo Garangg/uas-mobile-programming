@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_laravel/Models/toilet_model.dart';
 import 'package:flutter_laravel/Pages/Toilet/toilet_page.dart';
 import 'package:flutter_laravel/ViewModels/toilet_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddToiletPage extends StatefulWidget {
@@ -18,7 +19,8 @@ class _AddToiletPageState extends State<AddToiletPage> {
   final TextEditingController _lengthController = TextEditingController();
   final TextEditingController _widthController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _floorLocationController = TextEditingController();
+  final TextEditingController _floorLocationController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -44,12 +46,17 @@ class _AddToiletPageState extends State<AddToiletPage> {
       );
 
       try {
-        await toiletVM.createToilet(toilet);
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const ToiletPage(),
-          ),
-        );
+        await toiletVM.createToilet(toilet).then((value) {
+          showToast('Data toilet berhasil ditambahkan',
+              context: context,
+              backgroundColor: Colors.green[300],
+              textStyle: GoogleFonts.poppins(color: Colors.white));
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const ToiletPage(),
+            ),
+          );
+        });
       } catch (error) {
         print("Error creating toilet: $error");
       }
@@ -90,7 +97,7 @@ class _AddToiletPageState extends State<AddToiletPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Tambahkan Toilet',
+              'Tambah Toilet',
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -112,7 +119,8 @@ class _AddToiletPageState extends State<AddToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -143,11 +151,13 @@ class _AddToiletPageState extends State<AddToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _lengthController,
                         decoration: const InputDecoration(
                           labelText: 'Panjang',
@@ -176,11 +186,13 @@ class _AddToiletPageState extends State<AddToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _widthController,
                         decoration: const InputDecoration(
                           labelText: 'Lebar',
@@ -209,7 +221,8 @@ class _AddToiletPageState extends State<AddToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -240,7 +253,8 @@ class _AddToiletPageState extends State<AddToiletPage> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 0.5,
                             blurRadius: 20,
-                            offset: const Offset(0, 5), // changes position of shadow
+                            offset: const Offset(
+                                0, 5), // changes position of shadow
                           ),
                         ],
                       ),
@@ -277,7 +291,7 @@ class _AddToiletPageState extends State<AddToiletPage> {
                 onPressed: _submitForm,
                 child: const Text(
                   'Tambah Toilet',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),

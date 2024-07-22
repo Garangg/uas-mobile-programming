@@ -3,6 +3,7 @@ import 'package:flutter_laravel/Models/field_model.dart';
 import 'package:flutter_laravel/Pages/Field/addfield_page.dart';
 import 'package:flutter_laravel/Pages/Field/fielddetail_page.dart';
 import 'package:flutter_laravel/ViewModels/field_vm.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -88,13 +89,20 @@ class _FieldPageState extends State<FieldPage> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: ListTile(
-                                title: Text(fields[index].name),
+                                title: Text(
+                                  fields[index].name,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 trailing: GestureDetector(
                                   onTap: () {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                          backgroundColor: Colors.red[100],
                                           title: const Text('Konfirmasi'),
                                           content: const Text(
                                               'Apakah Anda yakin ingin menghapus data lapangan ini?'),
@@ -103,16 +111,32 @@ class _FieldPageState extends State<FieldPage> {
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: const Text('Batal'),
+                                              child: const Text('Batal',
+                                                  style: TextStyle(
+                                                      color: Colors.black)),
                                             ),
                                             TextButton(
                                               onPressed: () {
                                                 FieldVM.deleteField(
-                                                    fields[index].id);
-                                                Navigator.of(context).pop();
-                                                setState(() {});
+                                                        fields[index].id)
+                                                    .then((value) {
+                                                  showToast(
+                                                      'Data Lapangan berhasil dihapus',
+                                                      context: context,
+                                                      backgroundColor:
+                                                          Colors.red[400],
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              color: Colors
+                                                                  .white));
+                                                  Navigator.of(context).pop();
+                                                  setState(() {});
+                                                });
                                               },
-                                              child: const Text('Hapus'),
+                                              child: const Text('Hapus',
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 202, 55, 45))),
                                             ),
                                           ],
                                         );
